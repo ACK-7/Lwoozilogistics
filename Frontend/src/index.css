@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap");
+
+/* ============================================================
+   THEME — change colors here and they update site-wide
+   ============================================================ */
+:root {
+  /* Primary brand colors */
+  --color-navy: #b01020; /* deep crimson red */
+  --color-navy-dark: #1c0a0e; /* very dark charcoal-red */
+  --color-navy-light: #d91f35; /* brighter red */
+  --color-orange: #e8b800; /* rich gold */
+  --color-orange-light: #ffd700; /* bright gold */
+
+  /* Navbar */
+  --color-nav-bg: rgba(28, 10, 14, 0.97); /* dark charcoal-red, near-black */
+
+  /* Derived / semantic aliases */
+  --color-primary: var(--color-navy);
+  --color-primary-dark: var(--color-navy-dark);
+  --color-accent: var(--color-orange);
+  --color-accent-light: var(--color-orange-light);
+}
+/* ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply antialiased overflow-x-hidden;
+}
+
+.nav-link {
+  @apply text-white text-sm font-medium transition-colors duration-300 hover:text-orange;
+}
+
+.nav-link.active {
+  @apply text-orange;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.pulse-dot {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 46, 90, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-orange);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-orange-light);
+}
+
+body {
+  @apply antialiased overflow-x-hidden;
+}
+
+.nav-link {
+  @apply text-white text-sm font-medium transition-colors duration-300 hover:text-orange;
+}
+
+.nav-link.active {
+  @apply text-orange;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.pulse-dot {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 46, 90, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e87722;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f5a623;
+}
