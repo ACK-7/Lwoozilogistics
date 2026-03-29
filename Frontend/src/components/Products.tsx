@@ -732,8 +732,9 @@ const Products: React.FC = () => {
             </div>
             {/* Buttons */}
             <div className="flex flex-wrap gap-3 mt-2">
-              <button
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white transition-all hover:-translate-y-0.5"
+              <a
+                href="#contact"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold text-white transition-all hover:-translate-y-0.5 no-underline"
                 style={{
                   background:
                     "linear-gradient(135deg,var(--color-orange),var(--color-orange-light))",
@@ -742,9 +743,12 @@ const Products: React.FC = () => {
               >
                 <MessageCircle size={14} />
                 Inquire About This Product
-              </button>
-              <button
-                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:-translate-y-0.5"
+              </a>
+              <a
+                href="https://wa.me/256774544866"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-bold transition-all hover:-translate-y-0.5 no-underline"
                 style={{
                   background: "transparent",
                   border: "1.5px solid rgba(255,255,255,0.25)",
@@ -753,7 +757,7 @@ const Products: React.FC = () => {
               >
                 <Tag size={14} />
                 Get a Price Quote
-              </button>
+              </a>
             </div>
           </div>
 

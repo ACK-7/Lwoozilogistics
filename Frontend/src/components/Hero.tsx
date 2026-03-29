@@ -149,8 +149,9 @@ const Hero: React.FC = () => {
             className="flex flex-wrap gap-4 mb-12"
             style={{ animation: "fadeInUp 0.8s 0.6s ease both" }}
           >
-            <button
-              className="flex items-center gap-2 font-bold text-base px-8 py-3.5 rounded-full text-white transition-all duration-300 hover:-translate-y-1"
+            <a
+              href="#cars"
+              className="flex items-center gap-2 font-bold text-base px-8 py-3.5 rounded-full text-white transition-all duration-300 hover:-translate-y-1 no-underline"
               style={{
                 background:
                   "linear-gradient(135deg, var(--color-orange), var(--color-orange-light))",
@@ -172,9 +173,12 @@ const Hero: React.FC = () => {
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
               Explore Products
-            </button>
-            <button
-              className="flex items-center gap-2 font-semibold text-base px-8 py-3.5 rounded-full text-white transition-all duration-300 hover:-translate-y-1"
+            </a>
+            <a
+              href="https://wa.me/256774544866"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 font-semibold text-base px-8 py-3.5 rounded-full text-white transition-all duration-300 hover:-translate-y-1 no-underline"
               style={{ border: "1.5px solid rgba(255, 255, 255, 0.3)" }}
             >
               <svg
@@ -194,7 +198,7 @@ const Hero: React.FC = () => {
                 <circle cx="6.5" cy="9.5" r=".5" fill="currentColor"></circle>
               </svg>
               Get a Quote
-            </button>
+            </a>
           </div>
         </div>
 
@@ -312,7 +316,7 @@ const Hero: React.FC = () => {
                   margin: "2px 0",
                 }}
               >
-                3 Countries
+                1 Country
               </div>
               <div
                 className="flex items-center gap-1.5"
@@ -323,7 +327,7 @@ const Hero: React.FC = () => {
                 }}
               >
                 <MapPin size={11} />
-                China · Japan
+                China
               </div>
             </div>
 

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import config from "../config";
 
 const quickLinks = [
   { label: "Home", href: "#home" },
@@ -97,13 +98,13 @@ const Footer: React.FC = () => {
                     fontSize: "0.95rem",
                   }}
                 >
-                  Rwoozi China-Uganda Logistics
+                  {config.branding.fullName}
                 </span>
                 <span
                   className="font-medium tracking-widest uppercase"
                   style={{ fontSize: "0.75rem", color: "var(--color-orange)" }}
                 >
-                  LIMITED
+                  {config.branding.suffix}
                 </span>
               </div>
             </a>

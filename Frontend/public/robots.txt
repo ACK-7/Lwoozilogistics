@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+Disallow: /api
+Disallow: /.env
+Disallow: /admin
+Disallow: /private
+
+# Allow common search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Crawl delay for others
+User-agent: *
+Crawl-delay: 1
+
+Sitemap: https://rwoozilogistics.com/sitemap.xml

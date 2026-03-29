@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import config from "../config";
 
 const navLinks = [
   { label: "Home", id: "home" },
@@ -61,13 +62,13 @@ const Navigation: React.FC = () => {
               fontSize: "1rem",
             }}
           >
-            RWOOZI CHINA-UGANDA LOGISTICS
+            {config.branding.fullName.toUpperCase()}
           </span>
           <span
             className="font-medium tracking-widest uppercase"
             style={{ fontSize: "1rem", color: "var(--color-orange)" }}
           >
-            LIMITED
+            {config.branding.suffix}
           </span>
         </div>
       </a>

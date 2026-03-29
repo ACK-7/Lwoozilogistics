@@ -7,6 +7,7 @@ import {
   Send,
   ChevronDown,
 } from "lucide-react";
+import config from "../config";
 
 const INPUT_STYLE: React.CSSProperties = {
   width: "100%",
@@ -71,8 +72,10 @@ const Contact: React.FC = () => {
     service: "",
     message: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [serviceOpen, setServiceOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -105,10 +108,59 @@ const Contact: React.FC = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
+    setLoading(true);
+    setErrors({});
+
+    console.log("🚀 Form submitted with data:", form);
+
+    try {
+      const apiUrl = `${config.api.baseUrl}${config.api.endpoints.contact}`;
+      console.log("📡 Sending request to:", apiUrl);
+
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      console.log("📥 Response status:", response.status);
+
+      const data = await response.json();
+      console.log("📦 Response data:", data);
+
+      if (!response.ok) {
+        // Handle validation errors
+        if (response.status === 422 && data.errors) {
+          console.log("⚠️ Validation errors detected:", data.errors);
+          const validationErrors: Record<string, string> = {};
+          Object.entries(data.errors).forEach(([field, messages]: [string, any]) => {
+            // Handle both array and string formats
+            if (Array.isArray(messages)) {
+              validationErrors[field] = messages[0];
+            } else if (typeof messages === 'string') {
+              validationErrors[field] = messages;
+            } else {
+              validationErrors[field] = String(messages);
+            }
+            console.log(`❌ ${field}: ${validationErrors[field]}`);
+          });
+          setErrors(validationErrors);
+          console.log("✋ Errors set:", validationErrors);
+          setLoading(false);
+          return;
+        }
+        throw new Error(
+          data.message || "Failed to send message. Please try again.",
+        );
+      }
+
+      console.log("✅ Form submitted successfully!");
+      setSubmitted(true);
+      setErrors({});
       setForm({
         firstName: "",
         lastName: "",
@@ -117,8 +169,18 @@ const Contact: React.FC = () => {
         service: "",
         message: "",
       });
-      setSubmitted(false);
-    }, 3500);
+
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 3500);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "An unexpected error occurred";
+      console.error("❌ Form submission error:", err);
+      console.error("Error message:", errorMessage);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -304,38 +366,78 @@ const Contact: React.FC = () => {
                   <input
                     type="text"
                     placeholder="John"
-                    required
                     value={form.firstName}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, firstName: e.target.value }))
-                    }
-                    style={INPUT_STYLE}
+                    onChange={(e) => {
+                      setForm((f) => ({ ...f, firstName: e.target.value }));
+                      if (errors.firstName) {
+                        setErrors((prev) => {
+                          const newErrors = { ...prev };
+                          delete newErrors.firstName;
+                          return newErrors;
+                        });
+                      }
+                    }}
+                    style={{
+                      ...INPUT_STYLE,
+                      borderBottomColor: errors.firstName
+                        ? "#dc2626"
+                        : INPUT_STYLE.borderBottomColor,
+                    }}
                     onFocus={(e) =>
-                      (e.target.style.borderBottomColor = "var(--color-orange)")
+                      (e.target.style.borderBottomColor = errors.firstName
+                        ? "#dc2626"
+                        : "var(--color-orange)")
                     }
                     onBlur={(e) =>
-                      (e.target.style.borderBottomColor = "rgba(26,46,90,0.15)")
+                      (e.target.style.borderBottomColor = errors.firstName
+                        ? "#dc2626"
+                        : "rgba(26,46,90,0.15)")
                     }
                   />
+                  {errors.firstName && (
+                    <div className="text-xs font-semibold mt-1" style={{ color: "#dc2626" }}>
+                      {errors.firstName}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label style={LABEL_STYLE}>Last Name</label>
                   <input
                     type="text"
                     placeholder="Doe"
-                    required
                     value={form.lastName}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, lastName: e.target.value }))
-                    }
-                    style={INPUT_STYLE}
+                    onChange={(e) => {
+                      setForm((f) => ({ ...f, lastName: e.target.value }));
+                      if (errors.lastName) {
+                        setErrors((prev) => {
+                          const newErrors = { ...prev };
+                          delete newErrors.lastName;
+                          return newErrors;
+                        });
+                      }
+                    }}
+                    style={{
+                      ...INPUT_STYLE,
+                      borderBottomColor: errors.lastName
+                        ? "#dc2626"
+                        : INPUT_STYLE.borderBottomColor,
+                    }}
                     onFocus={(e) =>
-                      (e.target.style.borderBottomColor = "var(--color-orange)")
+                      (e.target.style.borderBottomColor = errors.lastName
+                        ? "#dc2626"
+                        : "var(--color-orange)")
                     }
                     onBlur={(e) =>
-                      (e.target.style.borderBottomColor = "rgba(26,46,90,0.15)")
+                      (e.target.style.borderBottomColor = errors.lastName
+                        ? "#dc2626"
+                        : "rgba(26,46,90,0.15)")
                     }
                   />
+                  {errors.lastName && (
+                    <div className="text-xs font-semibold mt-1" style={{ color: "#dc2626" }}>
+                      {errors.lastName}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -347,7 +449,7 @@ const Contact: React.FC = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      borderBottom: "1.5px solid rgba(26,46,90,0.15)",
+                      borderBottom: errors.phone ? "1.5px solid #dc2626" : "1.5px solid rgba(26,46,90,0.15)",
                       gap: 0,
                       transition: "border-color 0.3s",
                     }}
@@ -390,11 +492,17 @@ const Contact: React.FC = () => {
                     <input
                       type="tel"
                       placeholder="700 000 000"
-                      required
                       value={form.phone}
-                      onChange={(e) =>
-                        setForm((f) => ({ ...f, phone: e.target.value }))
-                      }
+                      onChange={(e) => {
+                        setForm((f) => ({ ...f, phone: e.target.value }));
+                        if (errors.phone) {
+                          setErrors((prev) => {
+                            const newErrors = { ...prev };
+                            delete newErrors.phone;
+                            return newErrors;
+                          });
+                        }
+                      }}
                       style={{
                         flex: 1,
                         background: "transparent",
@@ -407,25 +515,50 @@ const Contact: React.FC = () => {
                       }}
                     />
                   </div>
+                  {errors.phone && (
+                    <div className="text-xs font-semibold mt-1" style={{ color: "#dc2626" }}>
+                      {errors.phone}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <label style={LABEL_STYLE}>Email</label>
                   <input
-                    type="email"
+                    type="text"
                     placeholder="john@example.com"
-                    required
                     value={form.email}
-                    onChange={(e) =>
-                      setForm((f) => ({ ...f, email: e.target.value }))
-                    }
-                    style={INPUT_STYLE}
+                    onChange={(e) => {
+                      setForm((f) => ({ ...f, email: e.target.value }));
+                      if (errors.email) {
+                        setErrors((prev) => {
+                          const newErrors = { ...prev };
+                          delete newErrors.email;
+                          return newErrors;
+                        });
+                      }
+                    }}
+                    style={{
+                      ...INPUT_STYLE,
+                      borderBottomColor: errors.email
+                        ? "#dc2626"
+                        : INPUT_STYLE.borderBottomColor,
+                    }}
                     onFocus={(e) =>
-                      (e.target.style.borderBottomColor = "var(--color-orange)")
+                      (e.target.style.borderBottomColor = errors.email
+                        ? "#dc2626"
+                        : "var(--color-orange)")
                     }
                     onBlur={(e) =>
-                      (e.target.style.borderBottomColor = "rgba(26,46,90,0.15)")
+                      (e.target.style.borderBottomColor = errors.email
+                        ? "#dc2626"
+                        : "rgba(26,46,90,0.15)")
                     }
                   />
+                  {errors.email && (
+                    <div className="text-xs font-semibold mt-1" style={{ color: "#dc2626" }}>
+                      {errors.email}
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -444,7 +577,7 @@ const Contact: React.FC = () => {
                     padding: "10px 0",
                     background: "transparent",
                     border: "none",
-                    borderBottom: "1.5px solid rgba(26,46,90,0.15)",
+                    borderBottom: errors.service ? "1.5px solid #dc2626" : "1.5px solid rgba(26,46,90,0.15)",
                     color: form.service
                       ? "var(--color-navy)"
                       : "rgba(26,46,90,0.35)",
@@ -466,6 +599,11 @@ const Contact: React.FC = () => {
                     }}
                   />
                 </button>
+                {errors.service && (
+                  <div className="text-xs font-semibold mt-1" style={{ color: "#dc2626" }}>
+                    {errors.service}
+                  </div>
+                )}
                 {serviceOpen && (
                   <div
                     style={{
@@ -489,6 +627,11 @@ const Contact: React.FC = () => {
                         onClick={() => {
                           setForm((f) => ({ ...f, service: s }));
                           setServiceOpen(false);
+                          setErrors((prev) => {
+                            const newErrors = { ...prev };
+                            delete newErrors.service;
+                            return newErrors;
+                          });
                         }}
                         className="w-full text-left px-4 py-2.5 text-sm transition-colors duration-150 hover:bg-orange-50"
                         style={{
@@ -516,25 +659,48 @@ const Contact: React.FC = () => {
                 <textarea
                   rows={2}
                   placeholder="Tell us what you need — product type, quantity, destination..."
-                  required
                   value={form.message}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, message: e.target.value }))
-                  }
-                  style={{ ...INPUT_STYLE, resize: "none", lineHeight: 1.6 }}
+                  onChange={(e) => {
+                    setForm((f) => ({ ...f, message: e.target.value }));
+                    if (errors.message) {
+                      setErrors((prev) => {
+                        const newErrors = { ...prev };
+                        delete newErrors.message;
+                        return newErrors;
+                      });
+                    }
+                  }}
+                  style={{
+                    ...INPUT_STYLE,
+                    resize: "none",
+                    lineHeight: 1.6,
+                    borderBottomColor: errors.message
+                      ? "#dc2626"
+                      : INPUT_STYLE.borderBottomColor,
+                  }}
                   onFocus={(e) =>
-                    (e.target.style.borderBottomColor = "var(--color-orange)")
+                    (e.target.style.borderBottomColor = errors.message
+                      ? "#dc2626"
+                      : "var(--color-orange)")
                   }
                   onBlur={(e) =>
-                    (e.target.style.borderBottomColor = "rgba(26,46,90,0.15)")
+                    (e.target.style.borderBottomColor = errors.message
+                      ? "#dc2626"
+                      : "rgba(26,46,90,0.15)")
                   }
                 />
+                {errors.message && (
+                  <div className="text-xs font-semibold mt-1" style={{ color: "#dc2626" }}>
+                    {errors.message}
+                  </div>
+                )}
               </div>
 
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 hover:-translate-y-0.5"
+                disabled={loading}
+                className="w-full py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-70 disabled:cursor-not-allowed"
                 style={{
                   background:
                     "linear-gradient(135deg,var(--color-orange),var(--color-orange-light))",
@@ -542,8 +708,22 @@ const Contact: React.FC = () => {
                   boxShadow: "0 8px 24px rgba(232,119,34,0.4)",
                 }}
               >
-                <Send size={14} />
-                Send Message
+                {loading ? (
+                  <>
+                    <span
+                      className="inline-block animate-spin"
+                      style={{ width: "14px", height: "14px" }}
+                    >
+                      ⌛
+                    </span>
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send size={14} />
+                    Send Message
+                  </>
+                )}
               </button>
             </form>
           )}

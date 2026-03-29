@@ -390,8 +390,9 @@ const About: React.FC = () => {
 
             {/* CTA buttons */}
             <div className="flex flex-wrap gap-3 mt-6">
-              <button
-                className="inline-flex items-center gap-2 font-bold text-sm px-8 py-3.5 rounded-full text-white transition-all duration-300 hover:-translate-y-1"
+              <a
+                href="#contact"
+                className="inline-flex items-center gap-2 font-bold text-sm px-8 py-3.5 rounded-full text-white transition-all duration-300 hover:-translate-y-1 no-underline"
                 style={{
                   background:
                     "linear-gradient(135deg,var(--color-navy),var(--color-navy-light))",
@@ -399,16 +400,17 @@ const About: React.FC = () => {
                 }}
               >
                 <Phone size={15} /> Talk to Us
-              </button>
-              <button
-                className="inline-flex items-center gap-2 font-semibold text-sm px-8 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-1"
+              </a>
+              <a
+                href="#cars"
+                className="inline-flex items-center gap-2 font-semibold text-sm px-8 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-1 no-underline"
                 style={{
                   border: "1.5px solid rgba(26,46,90,0.2)",
                   color: "var(--color-navy)",
                 }}
               >
                 <Package size={15} /> View Our Products
-              </button>
+              </a>
             </div>
           </div>
         </div>
