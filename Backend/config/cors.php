@@ -8,9 +8,7 @@ return [
     'allowed_origins' => [
         'https://rwoozilogistics.com',
         'https://www.rwoozilogistics.com',
-        'http://localhost:3000',
-        'http://localhost:5173',
-    ],
+        ],
 
     'allowed_origins_patterns' => [],
 
@@ -18,7 +16,7 @@ return [
 
     'exposed_headers' => [],
 
-    'max_age' => 86400,
+    'max_age' => 0,
 
     'supports_credentials' => true,
 ];
