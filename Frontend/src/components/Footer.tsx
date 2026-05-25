@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
-import config from "../config";
 
 const quickLinks = [
   { label: "Home", href: "#home" },
@@ -22,7 +21,7 @@ const serviceLinks = [
 
 const contactItems = [
   "+256 774 544866",
-  "+190 9875 4305",
+  "+86 190 9875 4305",
   "rwoozilogistics@gmail.com",
   "Yuexiu District, Guangzhou, China",
   "Next To Metro Line 5, Xiaobei",
@@ -63,54 +62,27 @@ const Footer: React.FC = () => {
         }}
       >
         <div
-          className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 mb-6"
+          className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-10 mb-6 items-start"
           style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}
         >
           {/* ── Col 1: Logo + description + social ── */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 min-w-0 flex flex-col gap-2">
             <a
               href="#home"
-              className="flex items-center gap-2.5 mb-4"
-              style={{ textDecoration: "none" }}
+              className="inline-block self-start"
+              style={{ textDecoration: "none", lineHeight: 0 }}
             >
-              <div
-                style={{
-                  width: 40,
-                  height: 40,
-                  flexShrink: 0,
-                  background: "var(--color-orange)",
-                  borderRadius: "50%",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "white",
-                  fontWeight: 700,
-                  fontSize: "1rem",
-                }}
-              >
-                RL
-              </div>
-              <div className="flex flex-col leading-none">
-                <span
-                  className="font-bold text-white tracking-wide"
-                  style={{
-                    fontFamily: "'Playfair Display', serif",
-                    fontSize: "0.95rem",
-                  }}
-                >
-                  {config.branding.fullName}
-                </span>
-                <span
-                  className="font-medium tracking-widest uppercase"
-                  style={{ fontSize: "0.75rem", color: "var(--color-orange)" }}
-                >
-                  {config.branding.suffix}
-                </span>
-              </div>
+              <img
+                src="/img/logo.png?v=2"
+                alt="Rwoozi Logistics"
+                width={467}
+                height={110}
+                className="block h-auto w-[250px] max-w-full"
+              />
             </a>
 
             <p
-              className="text-sm leading-relaxed max-w-xs mb-5"
+              className="text-sm leading-relaxed max-w-xs mb-5 m-0 pt-0"
               style={{ color: "rgba(255,255,255,0.5)" }}
             >
               Your trusted China-based sourcing and freight partner. We connect

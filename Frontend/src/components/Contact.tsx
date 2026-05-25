@@ -49,7 +49,7 @@ const contactDetails = [
   {
     icon: <Phone size={15} stroke="#e87722" strokeWidth={2} />,
     primary: "+256 774 544866",
-    secondary: "+190 9875 4305",
+    secondary: "+86 190 9875 4305",
   },
   {
     icon: <MapPin size={15} stroke="#e87722" strokeWidth={2} />,

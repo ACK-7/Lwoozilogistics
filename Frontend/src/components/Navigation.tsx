@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import config from "../config";
 
 const navLinks = [
   { label: "Home", id: "home" },
@@ -44,33 +43,16 @@ const Navigation: React.FC = () => {
     >
       {/* Logo */}
       <a href="#home" className="flex items-center gap-2.5 no-underline">
-        <div
+        <img
+          src="/img/logo.png"
+          alt="Rwoozi Logistics"
           style={{
-            width: "42px",
-            height: "42px",
-            background: "var(--color-orange)",
+            width: "250px",
+            height: "auto",
+            objectFit: "contain",
           }}
-          className="flex items-center justify-center rounded-full text-white font-bold text-lg"
-        >
-          RL
-        </div>
-        <div className="flex flex-col leading-none">
-          <span
-            className="font-bold text-white tracking-wide"
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "1rem",
-            }}
-          >
-            {config.branding.fullName.toUpperCase()}
-          </span>
-          <span
-            className="font-medium tracking-widest uppercase"
-            style={{ fontSize: "1rem", color: "var(--color-orange)" }}
-          >
-            {config.branding.suffix}
-          </span>
-        </div>
+          className="flex-shrink-0"
+        />
       </a>
 
       {/* Desktop links */}
